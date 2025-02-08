@@ -10,8 +10,7 @@ Route::get('/', function () {
 });
 Route::get('/posts', function () {
     // $posts=Post::with(['author','category'])->latest()->get();
-    $posts=Post::orderBy('created_at','desc')->paginate(100);
-    return view('posts',['title'=>'Artikel','posts'=>$posts]);
+return view('posts',['title'=> 'Artikel','posts'=> Post::filter(request(['search','category','author']))->latest()->paginate(10)->withQueryString()]);
 });
 route::get('/posts/{post:slug}',function(Post $post){
      return view('post',['title'=>'Single Post','post'=>$post]);
